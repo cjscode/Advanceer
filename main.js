@@ -1,5 +1,6 @@
 console.log("main.js has loaded")
-let = "v0.05"
+let version = "v0.06"
+document.getElementById("version_text").innerHTML = version
 
 //game
 let game = {}

@@ -49,3 +49,12 @@ head,body,html {
     border-radius: 5px;
     overflow-x: none;
 }
+
+#bottom_bar {
+    text-align: right;
+    width: 100%;
+    height: fit-content;
+    background-color: dimgray;
+    position: fixed;
+    bottom: 0;
+}
