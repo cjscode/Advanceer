@@ -2,7 +2,7 @@ console.log("main.js has loaded")
 let game = {}
 game.money = 0
 game.jobCategories = {
-    standWorker:[],
+    standWorkers:[],
 }
 function update () {
     let jobBar = document.getElementById("div_job_progress")
