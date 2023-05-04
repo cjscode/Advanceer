@@ -1,4 +1,5 @@
 console.log("main.js has loaded")
+let = "v0.05"
 
 //game
 let game = {}
@@ -12,69 +13,86 @@ game.jobCategories = {
         display: "Stand Worker",
         lemonadeStand:{
             display:"Lemonade Stand",
-            money_tick: 5,
-            price: 0
+            money_tick: 5e+0,
+            price: 0e+0
         },
         cookieStand: {
             display:"Cookie Stand",
-            money_tick: 25,
-            price: 150
+            money_tick: 2.5e+1,
+            price: 1.5e+2
         },
         waterStand: {
             display:"Water Stand",
-            money_tick: 150,
-            price: 1000
+            money_tick: 1.5e+2,
+            price: 1e+3
         },
         sodaStand: {
             display:"Cookie Stand",
-            money_tick: 1250,
-            price: 75000
+            money_tick: 1e+3,
+            price: 2.5e+4
         }
     },
     gasStationWorker:{
         display: "Gas Station Worker",
         smallGasStation:{
             display: "Small Gas Station",
-            money_tick: 10000,
-            price: 250000
+            money_tick: 2.5e+4,
+            price: 5e+5
         },
         gasStation:{
             display: "Gas Station",
-            money_tick: 250000,
-            price: 7500000
+            money_tick: 5e+5,
+            price: 7.5e+6
         },
         TwentyFourSevenGasStation:{
             display: "24/7 Gas Station",
-            money_tick: 750000,
-            price: 25000000
+            money_tick: 7.5e+6,
+            price: 2.5e+7
         },
         bigCityGasStation:{
             display: "Big City Gas Station",
-            money_tick: 2500000,
-            price: 750000000
+            money_tick: 2.5e+7,
+            price: 1e+9
         }
     },
     groceryStoreWorker:{
         display: "Grocery Store Worker",
         shelfRestocker:{
             display: "Shelf Restocker",
-            money_tick: 100000000,
-            price: 2500000000
+            money_tick: 1e+9,
+            price: 2.5e+10
         },
         checkout:{
             display: "Checkout",
-            money_tick: 2500000000,
-            price: 75000000000
+            money_tick: 2.5e+10,
+            price: 5e+11
         },
         manager:{
             display: "Manager",
-            money_tick: 10000000000,
-            price: 250000000000
+            money_tick: 5e+11,
+            price: 2.5e+12
         },
         ceo:{
             display: "CEO",
-            money_tick: 250000000000,
-            price: 1000000000000
+            money_tick: 2.5e+12,
+            price: 1e+14
+        }
+    },
+    fastFood:{
+        display:"Fast Food",
+        cashier:{
+            display: "Cashier",
+            money_tick: 1e+14,
+            price: 2.5e+15
+        },
+        cook:{
+            display: "Cook",
+            money_tick: 2.5e+15,
+            price: 1e+16
+        },
+        shiftManager:{
+            display: "Shift Manager",
+
         }
     }
 }
