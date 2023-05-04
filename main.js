@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.06"
+let version = "v0.07"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -93,7 +93,105 @@ game.jobCategories = {
         },
         shiftManager:{
             display: "Shift Manager",
-
+            money_tick: 1e+16,
+            price: 2.5e+17
+        },
+        manager:{
+            display: "Manager",
+            money_tick: 2.5e+17,
+            price: 7.5e+18
+        }
+    },
+    carDealership:{
+        display: "Car Dealership",
+        showroomWorker:{
+            display: "Showroom Worker",
+            money_tick: 7.5e+18,
+            price: 1e+20
+        },
+        mechanic:{
+            display: "Mechanic",
+            money_tick: 1e+20,
+            price: 2.5e+21
+        },
+        financeManager:{
+            display: "Finance Manager",
+            money_tick: 2.5e+21,
+            price: 1e+23
+        },
+        ceo:{
+            display: "CEO",
+            money_tick: 1e+23,
+            price: 2.5e+24
+        }
+    },
+    hospital:{
+        display: "Hospital",
+        nursesAssistant:{
+            display: "Nurse's Assistant",
+            money_tick: 2.5e+24,
+            price: 5e+25
+        },
+        ambulanceDriver:{
+            display: "Ambulance Driver",
+            money_tick: 5e+25,
+            price: 2.5e+26
+        },
+        nurse:{
+            display: "Nurse",
+            money_tick: 2.5e+26,
+            price: 1e+28
+        },
+        cardiologist:{
+            display: "Cardiologist",
+            money_tick: 1e+28,
+            price: 7.5e+29
+        }
+    },
+    techCompany:{
+        display: "Tech Company",
+        assistantDeveloper:{
+            display: "Assistant Developer",
+            money_tick: 7.5e+29,
+            price: 1e+31
+        },
+        developer:{
+            display: "Developer",
+            money_tick: 1e+31,
+            price: 2.5e+32
+        },
+        headDeveloper:{
+            display: "Head Developer",
+            money_tick: 2.5e+32,
+            price: 7.5e+33
+        },
+        ceo:{
+            display: "CEO",
+            money_tick: 7.5e+33,
+            price: 1e+35
+        }
+    },
+    spaceIndustry:{
+        display: "Space Industry",
+        rocketBuilder:{
+            display: "Rocket Builder",
+            money_tick: 1e+35,
+            price: 2.5e+36
+        },
+        rocketDesigner:{
+            display: "Rocket Designer",
+            money_tick: 2.5e+36,
+            price: 5e+37
+        },
+        rocketLauncher:{
+            display: "Rocket Launcher",
+            money_tick: 5e+37,
+            price: 2.5e+38
+        },
+        astronout:{
+            display: "Astronout",
+            money_tick: 2.5e+38,
+            price: 1e+40
         }
     }
 }
