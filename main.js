@@ -196,6 +196,7 @@ game.jobCategories = {
     }
 }
 
+
 //update
 function update () {
     let jobBar = document.getElementById("div_job_progress")
