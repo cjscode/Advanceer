@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.07"
+let version = "v0.08"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -196,10 +196,12 @@ game.jobCategories = {
     }
 }
 
-
 //update
 function update () {
     let jobBar = document.getElementById("div_job_progress")
+    let advancementBar = document.getElementById("div_advancement_progress")
+    let moneyText = document.getElementById("p_money_text")
+    moneyText.innerHTML = "$"+getShort(game.money)
     requestAnimationFrame(update)
 }
 

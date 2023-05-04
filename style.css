@@ -58,3 +58,22 @@ head,body,html {
     position: fixed;
     bottom: 0;
 }
+
+#tabs {
+    width: 70%;
+    background-color: darkgrey;
+    position: fixed;
+    left: 30%;
+    text-align: center;
+}
+
+.tab {
+    float: left;
+    background-color: dimgray;
+    padding: 2.5px;
+    height: fit-content;
+    width: 32.5%;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    position: relative;
+}
