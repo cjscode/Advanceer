@@ -51,7 +51,6 @@ head,body,html {
     text-align: right;
     width: 100%;
     height: fit-content;
-    background-color: dimgray;
     position: fixed;
     bottom: 0;
 }
@@ -82,11 +81,13 @@ head,body,html {
 #content {
     background-color: dimgray;
     width: 70%;
+    height: 100%;
     position: fixed;
     float: right;
     left: 30%;
     right: 0;
     text-align: left;
+    overflow-x: scroll;
 }
 
 .job_div {

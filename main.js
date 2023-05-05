@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.09"
+let version = "v0.1"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -210,6 +210,14 @@ function update () {
             tabs[i].classList.remove("selected")
         }
     }
+    if (selectedTab == 1) {
+        document.getElementById("jobs").style.opacity = 1
+        document.getElementById("jobs").style.display = "block"
+    } else {
+        document.getElementById("jobs").style.opacity = 0
+        document.getElementById("jobs").style.display = "none"
+    }
+    //setupJobs()
     document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
     requestAnimationFrame(update)
 }
@@ -247,6 +255,17 @@ document.getElementById("tab2").addEventListener("click", function () {
 document.getElementById("tab3").addEventListener("click", function () {
     selectedTab = 3
 })
+
+//setup job things
+function setupJobs () {
+    let headers = []
+    for (let i = 0; i < Object.keys(game.jobCategories).length; i++) {
+        headers[i] = document.createElement("h1")
+        headers[i].innerHTML = "test"
+        document.getElementById("jobs").appendChild(headers[i])
+    }
+}
+setupJobs()
 
 //start updates
 update()
