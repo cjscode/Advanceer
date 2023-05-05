@@ -256,6 +256,7 @@ document.getElementById("tab3").addEventListener("click", function () {
     selectedTab = 3
 })
 
+
 //setup job things
 function setupJobs () {
     let headers = []
