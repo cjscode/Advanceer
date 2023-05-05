@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.11"
+let version = "v0.13"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -16,23 +16,27 @@ game.jobCategories = {
         jobs: ["lemonadeStand","cookieStand","waterStand","sodaStand"],
         lemonadeStand:{
             display:"Lemonade Stand",
-            money_tick: 5e+0,
-            price: 0e+0
+            money_sec: 5e+0,
+            price: 0e+0,
+            bought: false
         },
         cookieStand: {
             display:"Cookie Stand",
-            money_tick: 2.5e+1,
-            price: 1.5e+2
+            money_sec: 2.5e+1,
+            price: 1.5e+2,
+            bought: false
         },
         waterStand: {
             display:"Water Stand",
-            money_tick: 1.5e+2,
-            price: 1e+3
+            money_sec: 1.5e+2,
+            price: 1e+3,
+            bought: false
         },
         sodaStand: {
             display:"Cookie Stand",
-            money_tick: 1e+3,
-            price: 2.5e+4
+            money_sec: 1e+3,
+            price: 2.5e+4,
+            bought: false
         }
     },
     gasStationWorker:{
@@ -40,23 +44,27 @@ game.jobCategories = {
         jobs: ["smallGasStation","gasStation","twentyFourSevenGasStation","bigCityGasStation"],
         smallGasStation:{
             display: "Small Gas Station",
-            money_tick: 2.5e+4,
-            price: 5e+5
+            money_sec: 2.5e+4,
+            price: 5e+5,
+            bought: false
         },
         gasStation:{
             display: "Gas Station",
-            money_tick: 5e+5,
-            price: 7.5e+6
+            money_sec: 5e+5,
+            price: 7.5e+6,
+            bought: false
         },
         twentyFourSevenGasStation:{
             display: "24/7 Gas Station",
-            money_tick: 7.5e+6,
-            price: 2.5e+7
+            money_sec: 7.5e+6,
+            price: 2.5e+7,
+            bought: false
         },
         bigCityGasStation:{
             display: "Big City Gas Station",
-            money_tick: 2.5e+7,
-            price: 1e+9
+            money_sec: 2.5e+7,
+            price: 1e+9,
+            bought: false
         }
     },
     groceryStoreWorker:{
@@ -64,23 +72,27 @@ game.jobCategories = {
         jobs: ["shelfRestocker","checkout","manager","ceo"],
         shelfRestocker:{
             display: "Shelf Restocker",
-            money_tick: 1e+9,
-            price: 2.5e+10
+            money_sec: 1e+9,
+            price: 2.5e+10,
+            bought: false
         },
         checkout:{
             display: "Checkout",
-            money_tick: 2.5e+10,
-            price: 5e+11
+            money_sec: 2.5e+10,
+            price: 5e+11,
+            bought: false
         },
         manager:{
             display: "Manager",
-            money_tick: 5e+11,
-            price: 2.5e+12
+            money_sec: 5e+11,
+            price: 2.5e+12,
+            bought: false
         },
         ceo:{
             display: "CEO",
-            money_tick: 2.5e+12,
-            price: 1e+14
+            money_sec: 2.5e+12,
+            price: 1e+14,
+            bought: false
         }
     },
     fastFood:{
@@ -88,23 +100,27 @@ game.jobCategories = {
         jobs: ["cashier","cook","shiftManager","manager"],
         cashier:{
             display: "Cashier",
-            money_tick: 1e+14,
-            price: 2.5e+15
+            money_sec: 1e+14,
+            price: 2.5e+15,
+            bought: false
         },
         cook:{
             display: "Cook",
-            money_tick: 2.5e+15,
-            price: 1e+16
+            money_sec: 2.5e+15,
+            price: 1e+16,
+            bought: false
         },
         shiftManager:{
             display: "Shift Manager",
-            money_tick: 1e+16,
-            price: 2.5e+17
+            money_sec: 1e+16,
+            price: 2.5e+17,
+            bought: false
         },
         manager:{
             display: "Manager",
-            money_tick: 2.5e+17,
-            price: 7.5e+18
+            money_sec: 2.5e+17,
+            price: 7.5e+18,
+            bought: false
         }
     },
     carDealership:{
@@ -112,23 +128,27 @@ game.jobCategories = {
         jobs: ["showroomWorker","mechanic","financeManager","ceo"],
         showroomWorker:{
             display: "Showroom Worker",
-            money_tick: 7.5e+18,
-            price: 1e+20
+            money_sec: 7.5e+18,
+            price: 1e+20,
+            bought: false
         },
         mechanic:{
             display: "Mechanic",
-            money_tick: 1e+20,
-            price: 2.5e+21
+            money_sec: 1e+20,
+            price: 2.5e+21,
+            bought: false
         },
         financeManager:{
             display: "Finance Manager",
-            money_tick: 2.5e+21,
-            price: 1e+23
+            money_sec: 2.5e+21,
+            price: 1e+23,
+            bought: false
         },
         ceo:{
             display: "CEO",
-            money_tick: 1e+23,
-            price: 2.5e+24
+            money_sec: 1e+23,
+            price: 2.5e+24,
+            bought: false
         }
     },
     hospital:{
@@ -136,23 +156,27 @@ game.jobCategories = {
         jobs: ["nursesAssistant","ambulanceDriver","nurse","cardiologist"],
         nursesAssistant:{
             display: "Nurse's Assistant",
-            money_tick: 2.5e+24,
-            price: 5e+25
+            money_sec: 2.5e+24,
+            price: 5e+25,
+            bought: false
         },
         ambulanceDriver:{
             display: "Ambulance Driver",
-            money_tick: 5e+25,
-            price: 2.5e+26
+            money_sec: 5e+25,
+            price: 2.5e+26,
+            bought: false
         },
         nurse:{
             display: "Nurse",
-            money_tick: 2.5e+26,
-            price: 1e+28
+            money_sec: 2.5e+26,
+            price: 1e+28,
+            bought: false
         },
         cardiologist:{
             display: "Cardiologist",
-            money_tick: 1e+28,
-            price: 7.5e+29
+            money_sec: 1e+28,
+            price: 7.5e+29,
+            bought: false
         }
     },
     softwareCompany:{
@@ -160,23 +184,27 @@ game.jobCategories = {
         jobs: ["assistantDeveloper","developer","headDeveloper","ceo"],
         assistantDeveloper:{
             display: "Assistant Developer",
-            money_tick: 7.5e+29,
-            price: 1e+31
+            money_sec: 7.5e+29,
+            price: 1e+31,
+            bought: false
         },
         developer:{
             display: "Developer",
-            money_tick: 1e+31,
-            price: 2.5e+32
+            money_sec: 1e+31,
+            price: 2.5e+32,
+            bought: false
         },
         headDeveloper:{
             display: "Head Developer",
-            money_tick: 2.5e+32,
-            price: 7.5e+33
+            money_sec: 2.5e+32,
+            price: 7.5e+33,
+            bought: false
         },
         ceo:{
             display: "CEO",
-            money_tick: 7.5e+33,
-            price: 1e+35
+            money_sec: 7.5e+33,
+            price: 1e+35,
+            bought: false
         }
     },
     spaceIndustry:{
@@ -184,23 +212,27 @@ game.jobCategories = {
         jobs: ["rocketBuilder","rocketDesigner","rocketLauncher","astronout"],
         rocketBuilder:{
             display: "Rocket Builder",
-            money_tick: 1e+35,
-            price: 2.5e+36
+            money_sec: 1e+35,
+            price: 2.5e+36,
+            bought: false
         },
         rocketDesigner:{
             display: "Rocket Designer",
-            money_tick: 2.5e+36,
-            price: 5e+37
+            money_sec: 2.5e+36,
+            price: 5e+37,
+            bought: false
         },
         rocketLauncher:{
             display: "Rocket Launcher",
-            money_tick: 5e+37,
-            price: 2.5e+38
+            money_sec: 5e+37,
+            price: 2.5e+38,
+            bought: false
         },
         astronout:{
             display: "Astronout",
-            money_tick: 2.5e+38,
-            price: 1e+40
+            money_sec: 2.5e+38,
+            price: 1e+40,
+            bought: false
         }
     }
 }
@@ -270,14 +302,16 @@ function setupJobs () {
     document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
     let headers = []
     let divClones = []
+    let tempName = document.getElementById("name")
+    let tempMps = document.getElementById("mps")
     for (let i = 0; i < Object.keys(game.jobCategories).length-1; i++) {
         headers[i] = document.createElement("h1")
         headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display
         document.getElementById("jobs").appendChild(headers[i])
         for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
+            tempName.innerHTML = ((ii*10)+(i))
             divClones[((ii*10)+(i))] = document.getElementById("template_div").cloneNode(true)
             divClones[((ii*10)+(i))].id = "div_"+((ii*10)+(i))
-            divClones[((ii*10)+(i))].innerHTML = "<h1>"+((ii*10)+(i))+"</h1><p id='mpt_"+((ii*10)+(i))+"'>mpt here</p><div class='progress_bar'><div id='div_template_progress' class='inner_progress_bar'><p class='p_template_text'>ERR/ERR</p></div></div>"
             document.getElementById("jobs").appendChild(divClones[((ii*10)+(i))])
         }
     }

@@ -97,3 +97,11 @@ head,body,html {
     background-color: gray;
     padding: 10px;
 }
+
+.price_h1 {
+    font-size: 45px;
+}
+
+.center {
+    text-align: center;
+}
