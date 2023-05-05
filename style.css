@@ -1,5 +1,8 @@
 * {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    border: 0;
+    margin: 0;
+    padding: 0;
 }
 
 #sidebar {
@@ -12,20 +15,14 @@
 }
 
 p {
-    margin: 0;
-    padding: 0;
     font-size: 20px;
 }
 
 h1 {
-    margin: 0;
-    padding: 0;
     font-size: 25px;
 }
 
 head,body,html {
-    margin: 0;
-    padding: 0;
     overflow: hidden;
 }
 
@@ -69,11 +66,33 @@ head,body,html {
 
 .tab {
     float: left;
-    background-color: dimgray;
-    padding: 2.5px;
+    background-color: gray;
+    /*padding: 2.5px;*/
     height: fit-content;
-    width: 32.5%;
+    width: 33.333%;
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: relative;
+}
+
+.tab.selected {
+    background-color: dimgray;
+}
+
+#content {
+    background-color: dimgray;
+    width: 70%;
+    position: fixed;
+    float: right;
+    left: 30%;
+    right: 0;
+    text-align: left;
+}
+
+.job_div {
+    border-radius: 10px;
+    width: 95%;
+    margin: 2.5%;
+    background-color: gray;
+    padding: 10px;
 }

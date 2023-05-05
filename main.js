@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.08"
+let version = "v0.09"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -202,6 +202,15 @@ function update () {
     let advancementBar = document.getElementById("div_advancement_progress")
     let moneyText = document.getElementById("p_money_text")
     moneyText.innerHTML = "$"+getShort(game.money)
+    let tabs = document.querySelectorAll(".tab")
+    for (let i = 0; i < tabs.length; i++) {
+        if (selectedTab == i+1) {
+            tabs[i].classList.add("selected")
+        } else {
+            tabs[i].classList.remove("selected")
+        }
+    }
+    document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
     requestAnimationFrame(update)
 }
 
@@ -226,6 +235,18 @@ function getShort (n) {
     i -= 1
     return ""+(Math.floor(n/Math.pow(10,(i+1)*3-2))/100)+" "+abbr[i]
 }
+
+//tabs
+let selectedTab = 1
+document.getElementById("tab1").addEventListener("click", function () {
+    selectedTab = 1
+})
+document.getElementById("tab2").addEventListener("click", function () {
+    selectedTab = 2
+})
+document.getElementById("tab3").addEventListener("click", function () {
+    selectedTab = 3
+})
 
 //start updates
 update()
