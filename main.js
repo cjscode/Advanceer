@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.1"
+let version = "v0.11"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -10,8 +10,10 @@ game.money = 0
 
 //categores
 game.jobCategories = {
+    categories: ["standWorker", "gasStationWorker", "groceryStoreWorker", "fastFood", "carDealership", "hospital", "softwareCompany", "spaceIndustry"],
     standWorker:{
         display: "Stand Worker",
+        jobs: ["lemonadeStand","cookieStand","waterStand","sodaStand"],
         lemonadeStand:{
             display:"Lemonade Stand",
             money_tick: 5e+0,
@@ -35,6 +37,7 @@ game.jobCategories = {
     },
     gasStationWorker:{
         display: "Gas Station Worker",
+        jobs: ["smallGasStation","gasStation","twentyFourSevenGasStation","bigCityGasStation"],
         smallGasStation:{
             display: "Small Gas Station",
             money_tick: 2.5e+4,
@@ -45,7 +48,7 @@ game.jobCategories = {
             money_tick: 5e+5,
             price: 7.5e+6
         },
-        TwentyFourSevenGasStation:{
+        twentyFourSevenGasStation:{
             display: "24/7 Gas Station",
             money_tick: 7.5e+6,
             price: 2.5e+7
@@ -58,6 +61,7 @@ game.jobCategories = {
     },
     groceryStoreWorker:{
         display: "Grocery Store Worker",
+        jobs: ["shelfRestocker","checkout","manager","ceo"],
         shelfRestocker:{
             display: "Shelf Restocker",
             money_tick: 1e+9,
@@ -81,6 +85,7 @@ game.jobCategories = {
     },
     fastFood:{
         display:"Fast Food",
+        jobs: ["cashier","cook","shiftManager","manager"],
         cashier:{
             display: "Cashier",
             money_tick: 1e+14,
@@ -104,6 +109,7 @@ game.jobCategories = {
     },
     carDealership:{
         display: "Car Dealership",
+        jobs: ["showroomWorker","mechanic","financeManager","ceo"],
         showroomWorker:{
             display: "Showroom Worker",
             money_tick: 7.5e+18,
@@ -127,6 +133,7 @@ game.jobCategories = {
     },
     hospital:{
         display: "Hospital",
+        jobs: ["nursesAssistant","ambulanceDriver","nurse","cardiologist"],
         nursesAssistant:{
             display: "Nurse's Assistant",
             money_tick: 2.5e+24,
@@ -148,8 +155,9 @@ game.jobCategories = {
             price: 7.5e+29
         }
     },
-    techCompany:{
-        display: "Tech Company",
+    softwareCompany:{
+        display: "Software Company",
+        jobs: ["assistantDeveloper","developer","headDeveloper","ceo"],
         assistantDeveloper:{
             display: "Assistant Developer",
             money_tick: 7.5e+29,
@@ -173,6 +181,7 @@ game.jobCategories = {
     },
     spaceIndustry:{
         display: "Space Industry",
+        jobs: ["rocketBuilder","rocketDesigner","rocketLauncher","astronout"],
         rocketBuilder:{
             display: "Rocket Builder",
             money_tick: 1e+35,
@@ -218,7 +227,6 @@ function update () {
         document.getElementById("jobs").style.display = "none"
     }
     //setupJobs()
-    document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
     requestAnimationFrame(update)
 }
 
@@ -256,15 +264,24 @@ document.getElementById("tab3").addEventListener("click", function () {
     selectedTab = 3
 })
 
-
 //setup job things
 function setupJobs () {
+    document.getElementById("content").style.height = (document.getElementById("content").clientHeight-document.getElementById("tabs").clientHeight)+"px"
+    document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
     let headers = []
-    for (let i = 0; i < Object.keys(game.jobCategories).length; i++) {
+    let divClones = []
+    for (let i = 0; i < Object.keys(game.jobCategories).length-1; i++) {
         headers[i] = document.createElement("h1")
-        headers[i].innerHTML = "test"
+        headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display
         document.getElementById("jobs").appendChild(headers[i])
+        for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
+            divClones[((ii*10)+(i))] = document.getElementById("template_div").cloneNode(true)
+            divClones[((ii*10)+(i))].id = "div_"+((ii*10)+(i))
+            divClones[((ii*10)+(i))].innerHTML = "<h1>"+((ii*10)+(i))+"</h1><p id='mpt_"+((ii*10)+(i))+"'>mpt here</p><div class='progress_bar'><div id='div_template_progress' class='inner_progress_bar'><p class='p_template_text'>ERR/ERR</p></div></div>"
+            document.getElementById("jobs").appendChild(divClones[((ii*10)+(i))])
+        }
     }
+    document.getElementById("template_div").style.display = "none"
 }
 setupJobs()
 
