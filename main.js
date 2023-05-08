@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.13"
+let version = "v0.14"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -17,8 +17,8 @@ game.jobCategories = {
         lemonadeStand:{
             display:"Lemonade Stand",
             money_sec: 5e+0,
-            price: 0e+0,
-            bought: false
+            price: 0,
+            bought: true
         },
         cookieStand: {
             display:"Cookie Stand",
@@ -258,7 +258,7 @@ function update () {
         document.getElementById("jobs").style.opacity = 0
         document.getElementById("jobs").style.display = "none"
     }
-    //setupJobs()
+    refreshJobs()
     requestAnimationFrame(update)
 }
 
@@ -298,18 +298,23 @@ document.getElementById("tab3").addEventListener("click", function () {
 
 //setup job things
 function setupJobs () {
+    document.getElementById("template_div").style.display = "block"
     document.getElementById("content").style.height = (document.getElementById("content").clientHeight-document.getElementById("tabs").clientHeight)+"px"
     document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
     let headers = []
     let divClones = []
     let tempName = document.getElementById("name")
     let tempMps = document.getElementById("mps")
+    let tempPrice = document.getElementById("price")       
     for (let i = 0; i < Object.keys(game.jobCategories).length-1; i++) {
         headers[i] = document.createElement("h1")
         headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display
+        headers[i].classList.add("section")
         document.getElementById("jobs").appendChild(headers[i])
         for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
-            tempName.innerHTML = ((ii*10)+(i))
+            tempName.innerHTML = game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display
+            tempPrice.innerHTML = "$"+getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].price)
+            tempMps.innerHTML = "$"+getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec)+"/s"
             divClones[((ii*10)+(i))] = document.getElementById("template_div").cloneNode(true)
             divClones[((ii*10)+(i))].id = "div_"+((ii*10)+(i))
             document.getElementById("jobs").appendChild(divClones[((ii*10)+(i))])
@@ -317,6 +322,35 @@ function setupJobs () {
     }
     document.getElementById("template_div").style.display = "none"
 }
+
+//refresh the jobs
+function refreshJobs () {
+    for (let i = 0; i < Object.keys(game.jobCategories).length-1; i++) {
+        for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
+            let job = document.getElementById("div_"+((ii*10)+(i)))
+            if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].bought) {
+                job.style.opacity = 1
+            } else {
+                job.style.opacity = 0.5
+            }
+            if (ii == 0) {
+                ii++
+            }
+            job = document.getElementById("div_"+((ii*10)+(i)))
+            if (ii == 0 && !(i == 0) && !(game.jobCategories[game.jobCategories.categories[3]][game.jobCategories[game.jobCategories.categories[3]].jobs[ii-1]].bought)) {
+                job.style.display = "none"
+            } else {
+                if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii-1]].bought) {
+                    job.style.display = "block"
+                } else {
+                    job.style.display = "none"
+                }
+            }
+        }
+    }
+}
+
+//create and setup jobs
 setupJobs()
 
 //start updates
