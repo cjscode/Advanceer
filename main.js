@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.14"
+let version = "v0.15"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -24,19 +24,19 @@ game.jobCategories = {
             display:"Cookie Stand",
             money_sec: 2.5e+1,
             price: 1.5e+2,
-            bought: false
+            bought: true
         },
         waterStand: {
             display:"Water Stand",
             money_sec: 1.5e+2,
             price: 1e+3,
-            bought: false
+            bought: true
         },
         sodaStand: {
             display:"Cookie Stand",
             money_sec: 1e+3,
             price: 2.5e+4,
-            bought: false
+            bought: true
         }
     },
     gasStationWorker:{
@@ -239,10 +239,13 @@ game.jobCategories = {
 
 //update
 function update () {
+    //setup
     let jobBar = document.getElementById("div_job_progress")
     let advancementBar = document.getElementById("div_advancement_progress")
     let moneyText = document.getElementById("p_money_text")
     moneyText.innerHTML = "$"+getShort(game.money)
+
+    //tabs
     let tabs = document.querySelectorAll(".tab")
     for (let i = 0; i < tabs.length; i++) {
         if (selectedTab == i+1) {
@@ -251,6 +254,8 @@ function update () {
             tabs[i].classList.remove("selected")
         }
     }
+
+    //show selection 
     if (selectedTab == 1) {
         document.getElementById("jobs").style.opacity = 1
         document.getElementById("jobs").style.display = "block"
@@ -258,7 +263,11 @@ function update () {
         document.getElementById("jobs").style.opacity = 0
         document.getElementById("jobs").style.display = "none"
     }
+
+    //refresh job panels
     refreshJobs()
+
+    //run again
     requestAnimationFrame(update)
 }
 
@@ -298,6 +307,7 @@ document.getElementById("tab3").addEventListener("click", function () {
 
 //setup job things
 function setupJobs () {
+    //setup
     document.getElementById("template_div").style.display = "block"
     document.getElementById("content").style.height = (document.getElementById("content").clientHeight-document.getElementById("tabs").clientHeight)+"px"
     document.getElementById("content").style.top = document.getElementById("tabs").clientHeight+"px"
@@ -305,11 +315,14 @@ function setupJobs () {
     let divClones = []
     let tempName = document.getElementById("name")
     let tempMps = document.getElementById("mps")
-    let tempPrice = document.getElementById("price")       
+    let tempPrice = document.getElementById("price") 
+
+    //create jobs
     for (let i = 0; i < Object.keys(game.jobCategories).length-1; i++) {
         headers[i] = document.createElement("h1")
         headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display
         headers[i].classList.add("section")
+        headers[i].id = "header_"+i
         document.getElementById("jobs").appendChild(headers[i])
         for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
             tempName.innerHTML = game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display
@@ -320,31 +333,52 @@ function setupJobs () {
             document.getElementById("jobs").appendChild(divClones[((ii*10)+(i))])
         }
     }
+
+    //hide template
     document.getElementById("template_div").style.display = "none"
 }
 
 //refresh the jobs
 function refreshJobs () {
+    //setup
+    let boughtList = []
+
+    //update job panels and labels
     for (let i = 0; i < Object.keys(game.jobCategories).length-1; i++) {
         for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
             let job = document.getElementById("div_"+((ii*10)+(i)))
-            if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].bought) {
+            boughtList.push(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].bought)
+
+            //indicate if bought
+            if (boughtList[(i*4)+ii]) {
+                job.querySelector(".center").style.display = "none"
                 job.style.opacity = 1
             } else {
+                job.querySelector(".center").style.display = "block"
                 job.style.opacity = 0.5
             }
-            if (ii == 0) {
-                ii++
-            }
-            job = document.getElementById("div_"+((ii*10)+(i)))
-            if (ii == 0 && !(i == 0) && !(game.jobCategories[game.jobCategories.categories[3]][game.jobCategories[game.jobCategories.categories[3]].jobs[ii-1]].bought)) {
-                job.style.display = "none"
-            } else {
-                if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii-1]].bought) {
-                    job.style.display = "block"
-                } else {
+
+            //hide panels
+            if (!(ii == 0 && i == 0)) {
+                job = document.getElementById("div_"+((ii*10)+(i)))
+                if (ii == 1 && !(i == 0) && !boughtList[(i*4)+ii-1] && !(boughtList[(i*4)+ii-1] == undefined)) {
                     job.style.display = "none"
+                } else {
+                    if (boughtList[(i*4)+ii-1]) {
+                        job.style.display = "block"
+                    } else {
+                        job.style.display = "none"
+                    }
                 }
+            }
+        }
+
+        //hide corresponding label
+        if (!(i == 0)) {
+            if (!boughtList[(i*4)-1]) {
+                document.getElementById("header_"+i).style.display = "none"
+            } else {
+                document.getElementById("header_"+i).style.display = "block"
             }
         }
     }
