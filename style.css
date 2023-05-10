@@ -42,9 +42,9 @@ head,body,html {
 .inner_progress_bar {
     position: relative;
     background-color: darkgray;
-    width: 5%;
+    width: 0%;
     border-radius: 5px;
-    overflow-x: none;
+    white-space: nowrap;
 }
 
 #bottom_bar {

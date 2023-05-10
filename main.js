@@ -2,7 +2,6 @@ console.log("main.js has loaded")
 let version = "v0.16"
 document.getElementById("version_text").innerHTML = version
 
-
 //game
 let game = {}
 
@@ -19,25 +18,33 @@ game.jobCategories = {
             display:"Lemonade Stand",
             money_sec: 5e+0,
             price: 0,
-            bought: false
+            bought: false,
+            max: 1.5e+2,
+            current: 0
         },
         cookieStand: {
             display:"Cookie Stand",
             money_sec: 2.5e+1,
             price: 1.5e+2,
-            bought: false
+            bought: false,
+            max: 1e+3,
+            current: 0
         },
         waterStand: {
             display:"Water Stand",
             money_sec: 1.5e+2,
             price: 1e+3,
-            bought: false
+            bought: false,
+            max: 2.5e+4,
+            current: 0
         },
         sodaStand: {
             display:"Cookie Stand",
             money_sec: 1e+3,
             price: 2.5e+4,
-            bought: false
+            bought: false,
+            max: 5e+5,
+            current: 0
         }
     },
     gasStationWorker:{
@@ -47,25 +54,33 @@ game.jobCategories = {
             display: "Small Gas Station",
             money_sec: 2.5e+4,
             price: 5e+5,
-            bought: false
+            bought: false,
+            max: 7.5e+6,
+            current: 0
         },
         gasStation:{
             display: "Gas Station",
             money_sec: 5e+5,
             price: 7.5e+6,
-            bought: false
+            bought: false,
+            max: 2.5e+7,
+            current: 0
         },
         twentyFourSevenGasStation:{
             display: "24/7 Gas Station",
             money_sec: 7.5e+6,
             price: 2.5e+7,
-            bought: false
+            bought: false,
+            max: 1e+9,
+            current: 0
         },
         bigCityGasStation:{
             display: "Big City Gas Station",
             money_sec: 2.5e+7,
             price: 1e+9,
-            bought: false
+            bought: false,
+            max: 2.5e+10,
+            current: 0
         }
     },
     groceryStoreWorker:{
@@ -75,25 +90,33 @@ game.jobCategories = {
             display: "Shelf Restocker",
             money_sec: 1e+9,
             price: 2.5e+10,
-            bought: false
+            bought: false,
+            max: 5e+11,
+            current: 0
         },
         checkout:{
             display: "Checkout",
             money_sec: 2.5e+10,
             price: 5e+11,
-            bought: false
+            bought: false,
+            max: 2.5e+12,
+            current: 0
         },
         manager:{
             display: "Manager",
             money_sec: 5e+11,
             price: 2.5e+12,
-            bought: false
+            bought: false,
+            max: 1e+14,
+            current: 0
         },
         ceo:{
             display: "CEO",
             money_sec: 2.5e+12,
             price: 1e+14,
-            bought: false
+            bought: false,
+            max: 2.5e+15,
+            current: 0
         }
     },
     fastFood:{
@@ -103,25 +126,33 @@ game.jobCategories = {
             display: "Cashier",
             money_sec: 1e+14,
             price: 2.5e+15,
-            bought: false
+            bought: false,
+            max: 1e+16,
+            current: 0
         },
         cook:{
             display: "Cook",
             money_sec: 2.5e+15,
             price: 1e+16,
-            bought: false
+            bought: false,
+            max: 2.5e+17,
+            current: 0
         },
         shiftManager:{
             display: "Shift Manager",
             money_sec: 1e+16,
             price: 2.5e+17,
-            bought: false
+            bought: false,
+            max: 7.5e+18,
+            current: 0
         },
         manager:{
             display: "Manager",
             money_sec: 2.5e+17,
             price: 7.5e+18,
-            bought: false
+            bought: false,
+            max: 1e+20,
+            current: 0
         }
     },
     carDealership:{
@@ -131,25 +162,33 @@ game.jobCategories = {
             display: "Showroom Worker",
             money_sec: 7.5e+18,
             price: 1e+20,
-            bought: false
+            bought: false,
+            max: 2.5e+21,
+            current: 0
         },
         mechanic:{
             display: "Mechanic",
             money_sec: 1e+20,
             price: 2.5e+21,
-            bought: false
+            bought: false,
+            max: 1e+23,
+            current: 0
         },
         financeManager:{
             display: "Finance Manager",
             money_sec: 2.5e+21,
             price: 1e+23,
-            bought: false
+            bought: false,
+            max: 2.5e+24,
+            current: 0
         },
         ceo:{
             display: "CEO",
             money_sec: 1e+23,
             price: 2.5e+24,
-            bought: false
+            bought: false,
+            max: 5e+25,
+            current: 0
         }
     },
     hospital:{
@@ -159,25 +198,33 @@ game.jobCategories = {
             display: "Nurse's Assistant",
             money_sec: 2.5e+24,
             price: 5e+25,
-            bought: false
+            bought: false,
+            max: 2.5e+26,
+            current: 0
         },
         ambulanceDriver:{
             display: "Ambulance Driver",
             money_sec: 5e+25,
             price: 2.5e+26,
-            bought: false
+            bought: false,
+            max: 1e+28,
+            current: 0
         },
         nurse:{
             display: "Nurse",
             money_sec: 2.5e+26,
             price: 1e+28,
-            bought: false
+            bought: false,
+            max: 7.5e+29,
+            current: 0
         },
         cardiologist:{
             display: "Cardiologist",
             money_sec: 1e+28,
             price: 7.5e+29,
-            bought: false
+            bought: false,
+            max: 1e+31,
+            current: 0
         }
     },
     softwareCompany:{
@@ -187,25 +234,33 @@ game.jobCategories = {
             display: "Assistant Developer",
             money_sec: 7.5e+29,
             price: 1e+31,
-            bought: false
+            bought: false,
+            max: 2.5e+32,
+            current: 0
         },
         developer:{
             display: "Developer",
             money_sec: 1e+31,
             price: 2.5e+32,
-            bought: false
+            bought: false,
+            max: 7.5e+33,
+            current: 0
         },
         headDeveloper:{
             display: "Head Developer",
             money_sec: 2.5e+32,
             price: 7.5e+33,
-            bought: false
+            bought: false,
+            max: 1e+35,
+            current: 0
         },
         ceo:{
             display: "CEO",
             money_sec: 7.5e+33,
             price: 1e+35,
-            bought: false
+            bought: false,
+            max: 2.5e+36,
+            current: 0
         }
     },
     spaceIndustry:{
@@ -215,25 +270,33 @@ game.jobCategories = {
             display: "Rocket Builder",
             money_sec: 1e+35,
             price: 2.5e+36,
-            bought: false
+            bought: false,
+            max: 5e+37,
+            current: 0
         },
         rocketDesigner:{
             display: "Rocket Designer",
             money_sec: 2.5e+36,
             price: 5e+37,
-            bought: false
+            bought: false,
+            max: 2.5e+38,
+            current: 0
         },
         rocketLauncher:{
             display: "Rocket Launcher",
             money_sec: 5e+37,
             price: 2.5e+38,
-            bought: false
+            bought: false,
+            max: 1e+40,
+            current: 0
         },
         astronout:{
             display: "Astronout",
             money_sec: 2.5e+38,
             price: 1e+40,
-            bought: false
+            bought: false,
+            max: 2.5e+41,
+            current: 0
         }
     }
 }
@@ -243,7 +306,13 @@ game.selectedJob = "none"
 game.selectedAdvancement = "none"
 
 //update
+let fps
+let loopOne = new Date()
+let loopTwo
 function update () {
+    loopTwo = new Date()
+    fps = 1000/(loopTwo.getTime()-loopOne.getTime())
+    loopOne = loopTwo
     //setup
     let jobBar = document.getElementById("div_job_progress")
     let advancementBar = document.getElementById("div_advancement_progress")
@@ -367,8 +436,8 @@ function refreshJobs () {
             }
 
             //hide panels
+            job = document.getElementById("div_"+((ii*10)+(i)))
             if (!(ii == 0 && i == 0)) {
-                job = document.getElementById("div_"+((ii*10)+(i)))
                 if (ii == 1 && !(i == 0) && !boughtList[(i*4)+ii-1] && !(boughtList[(i*4)+ii-1] == undefined)) {
                     job.style.display = "none"
                 } else {
@@ -377,6 +446,18 @@ function refreshJobs () {
                     } else {
                         job.style.display = "none"
                     }
+                }
+            }
+
+            //update progress and money
+            job.querySelector("#progress_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current)+"/"+getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)
+            if (game.selectedJob == (i*4)+ii) {
+                game.money += game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec/fps
+                job.querySelector("#div_progress").style.width = getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current,game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)+"%"
+                game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1
+                if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current >= game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) {
+                    game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current = 0
+                    game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max *= 1.1
                 }
             }
         }
@@ -401,8 +482,8 @@ function select(id, type) {
         if (!(job.bought)) {
             //if (game.money >= job.price) {
                 game.selectedJob = id
-                /*game.money -= job.price
-            }*/
+                game.money -= job.price
+            //}
             job.bought = true
             //alert(job.price)
         } else {
