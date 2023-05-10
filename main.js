@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.15"
+let version = "v0.16"
 document.getElementById("version_text").innerHTML = version
 
 //game
@@ -18,25 +18,25 @@ game.jobCategories = {
             display:"Lemonade Stand",
             money_sec: 5e+0,
             price: 0,
-            bought: true
+            bought: false
         },
         cookieStand: {
             display:"Cookie Stand",
             money_sec: 2.5e+1,
             price: 1.5e+2,
-            bought: true
+            bought: false
         },
         waterStand: {
             display:"Water Stand",
             money_sec: 1.5e+2,
             price: 1e+3,
-            bought: true
+            bought: false
         },
         sodaStand: {
             display:"Cookie Stand",
             money_sec: 1e+3,
             price: 2.5e+4,
-            bought: true
+            bought: false
         }
     },
     gasStationWorker:{
@@ -237,6 +237,10 @@ game.jobCategories = {
     }
 }
 
+//selections
+game.selectedJob = "none"
+game.selectedAdvancement = "none"
+
 //update
 function update () {
     //setup
@@ -330,6 +334,9 @@ function setupJobs () {
             tempMps.innerHTML = "$"+getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec)+"/s"
             divClones[((ii*10)+(i))] = document.getElementById("template_div").cloneNode(true)
             divClones[((ii*10)+(i))].id = "div_"+((ii*10)+(i))
+            divClones[((ii*10)+(i))].addEventListener("click", function () {
+                select(((i*4)+ii), "job")
+            })
             document.getElementById("jobs").appendChild(divClones[((ii*10)+(i))])
         }
     }
@@ -381,6 +388,27 @@ function refreshJobs () {
                 document.getElementById("header_"+i).style.display = "block"
             }
         }
+    }
+}
+
+//job selected
+function select(id, type) {
+    let ii = id % 4
+    let i = Math.floor(id/4)
+    let job = game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]]
+    if (type == "job") {
+        if (!(job.bought)) {
+            //if (game.money >= job.price) {
+                game.selectedJob = id
+                /*game.money -= job.price
+            }*/
+            job.bought = true
+            //alert(job.price)
+        } else {
+            game.selectedJob = id
+        }
+    } else {
+        game.selectedAdvancement = id
     }
 }
 
