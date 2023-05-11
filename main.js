@@ -1,11 +1,14 @@
 console.log("main.js has loaded")
-let version = "v0.18"
+let version = "v0.19"
 
 //game
 let game = {}
 if (!(localStorage.getItem("game") == null)) {
     game = JSON.parse(localStorage.getItem("game"))
 } else {
+    resetGame()
+}
+function resetGame() {
     //money
     game.money = 0
 
@@ -304,6 +307,239 @@ if (!(localStorage.getItem("game") == null)) {
             }
         }
     }
+    
+    //advancements
+    game.advancementCategories = {
+        categories: ["standWorker", "gasStationWorker", "groceryStoreWorker", "fastFood", "carDealership", "hospital", "softwareCompany", "spaceIndustry"],
+        standWorker: {
+            display: "Stand Worker",
+            jobs: ["lemonadeStand", "cookieStand", "waterStand", "sodaStand"],
+            lemonadeStand: {
+                display: "Fresh Lemons",
+                max: 1e+2,
+                current: 0,
+                amount: 0.05,
+                advances: 0
+            },
+            cookieStand: {
+                display: "Allergy Friendly Ingredients",
+                max: 1e+3,
+                current: 0,
+                amount: 0.1,
+                advances: 0
+            },
+            waterStand: {
+                display: "Cleaner Water",
+                max: 1e+4,
+                current: 0,
+                amount: 0.5,
+                advances: 0
+            },
+            sodaStand: {
+                display: "Sugarier Sodas",
+                max: 1e+5,
+                current: 0,
+                amount: 2,
+                advances: 0
+            }
+        },
+        gasStationWorker: {
+            display: "Gas Station Worker",
+            jobs: ["smallGasStation", "gasStation", "twentyFourSevenGasStation", "bigCityGasStation"],
+            smallGasStation: {
+                display: "Cleaner Bathroom",
+                max: 1e+6,
+                current: 0,
+                amount: 10,
+                advances: 0
+            },
+            gasStation: {
+                display: "More Snacks",
+                max: 1e+7,
+                current: 0,
+                amount: 25,
+                advances: 0
+            },
+            twentyFourSevenGasStation: {
+                display: "More Workers",
+                max: 1e+8,
+                current: 0,
+                amount: 2e+2,
+                advances: 0
+            },
+            bigCityGasStation: {
+                display: "More Expensive Gas",
+                max: 1e+9,
+                current: 0,
+                amount: 1e+3,
+                advances: 0
+            }
+        },
+        groceryStoreWorker: {
+            display: "Grocery Store Worker",
+            jobs: ["shelfRestocker", "checkout", "manager", "ceo"],
+            shelfRestocker: {
+                display: "Forklifts",
+                max: 1e+10,
+                current: 0,
+                amount: 5e+4,
+                advances: 0
+            },
+            checkout: {
+                display: "Faster Belt",
+                max: 1e+11,
+                current: 0,
+                amount: 1e+6,
+                advances: 0
+            },
+            manager: {
+                display: "More Computers",
+                max: 1e+12,
+                current: 0,
+                amount: 7.5e+7,
+                advances: 0
+            },
+            ceo: {
+                display: "More Stores",
+                max: 1e+13,
+                current: 0,
+                amount: 2.5e+9,
+                advances: 0
+            }
+        },
+        fastFood: {
+            display: "Fast Food",
+            jobs: ["cashier", "cook", "shiftManager", "manager"],
+            cashier: {
+                display: "Faster Math Skills",
+                max: 1e+14,
+                current: 0,
+                amount: 1e+10,
+                advances: 0
+            },
+            cook: {
+                display: "Better Tasting Ingredients",
+                max: 1e+15,
+                current: 0,
+                amount: 5e+11,
+                advances: 0
+            },
+            shiftManager: {
+                display: "Longer Shifts",
+                max: 1e+16,
+                current: 0,
+                amount: 1e+13,
+                advances: 0
+            },
+            manager: {
+                display: "Auto Ordering",
+                max: 1e+17,
+                current: 0,
+                amount: 2.5e+14,
+                advances: 0
+            }
+        },
+        carDealership: {
+            display: "Car Dealership",
+            jobs: ["showroomWorker", "mechanic", "financeManager", "ceo"],
+            showroomWorker: {
+                display: "More Cars",
+                max: 1e+18,
+                current: 0,
+                amount: 5e+15,
+                advances: 0
+            },
+            mechanic: {
+                display: "More Tools",
+                max: 1e+19,
+                current: 0,
+                amount: 7.5e+16,
+                advances: 0
+            },
+            financeManager: {
+                display: "Automated Finances",
+                max: 1e+20,
+                current: 0,
+                amount: 1e+18,
+                advances: 0
+            },
+            ceo: {
+                display: "More Showrooms",
+                max: 1e+21,
+                current: 0,
+                amount: 2.5e+19,
+                advances: 0
+            }
+        },
+        hospital: {
+            display: "Hospital",
+            jobs: ["nursesAssistant", "ambulanceDriver", "nurse", "cardiologist"],
+            nursesAssistant: {
+                display: "Longer Hours",
+                max: 1e+22,
+                current: 0,
+                amount: 7.5e+20,
+                advances: 0
+            },
+            ambulanceDriver: {
+                display: "Faster Ambulance",
+                max: 1e+23,
+                current: 0,
+                amount: 1e+22,
+                advances: 0
+            },
+            nurse: {
+                display: "Better Equipment",
+                max: 1e+24,
+                current: 0,
+                amount: 2.5e+23,
+                advances: 0
+            },
+            cardiologist: {
+                display: "Less Blood Clots",
+                max: 1e+25,
+                current: 0,
+                amount: 1e+25,
+                advances: 0
+            }
+        },
+        softwareCompany: {
+            display: "Software Company",
+            jobs: ["assistantDeveloper", "developer", "headDeveloper", "ceo"],
+            assistantDeveloper: {
+                display: "",
+                max: 1e+26,
+                current: 0,
+                amount: 1e+27,
+                advances: 0
+            },
+            developer: {
+                display: "Developer"
+            },
+            headDeveloper: {
+                display: "Head Developer"
+            },
+            ceo: {
+                display: "CEO"
+            }
+        },
+        spaceIndustry: {
+            display: "Space Industry",
+            jobs: ["rocketBuilder", "rocketDesigner", "rocketLauncher", "astronout"],
+            rocketBuilder: {
+                display: "Rocket Builder"
+            },
+            rocketDesigner: {
+                display: "Rocket Designer"
+            },
+            rocketLauncher: {
+                display: "Rocket Launcher"
+            },
+            astronout: {
+                display: "Astronout"
+            }
+        }
+    }
 
     //selections
     game.selectedJob = "none"
@@ -346,6 +582,13 @@ function update() {
     } else {
         document.getElementById("jobs").style.opacity = 0
         document.getElementById("jobs").style.display = "none"
+    }
+    if (selectedTab == 3) {
+        document.getElementById("settings").style.opacity = 1
+        document.getElementById("settings").style.display = "block"
+    } else {
+        document.getElementById("settings").style.opacity = 0
+        document.getElementById("settings").style.display = "none"
     }
 
     //refresh job panels
@@ -390,6 +633,18 @@ document.getElementById("tab2").addEventListener("click", function () {
 })
 document.getElementById("tab3").addEventListener("click", function () {
     selectedTab = 3
+})
+
+//settings
+document.getElementById("reset").addEventListener("click", function () {
+    let doReset = prompt("Type RESET to reset your game. You can not undo this action.","")
+    if (doReset == "RESET") {
+        resetGame()
+        alert("Game reset.")
+        location.reload()
+    } else {
+        alert("Reset game canceled.")
+    }
 })
 
 //setup job things
