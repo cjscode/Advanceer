@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.19"
+let version = "v0.2"
 
 //game
 let game = {}
@@ -507,36 +507,64 @@ function resetGame() {
             display: "Software Company",
             jobs: ["assistantDeveloper", "developer", "headDeveloper", "ceo"],
             assistantDeveloper: {
-                display: "",
+                display: "Faster Computers",
                 max: 1e+26,
                 current: 0,
                 amount: 1e+27,
                 advances: 0
             },
             developer: {
-                display: "Developer"
+                display: "Better Keyboard",
+                max: 1e+27,
+                current: 0,
+                amount: 2.5e+29,
+                advances: 0
             },
             headDeveloper: {
-                display: "Head Developer"
+                display: "Coding AI",
+                max: 1e+28,
+                current: 0,
+                amount: 7.5e+30,
+                advances: 0
             },
             ceo: {
-                display: "CEO"
+                display: "Supercomputer",
+                max: 1e+29,
+                current: 0,
+                amount: 5e+31,
+                advances: 0
             }
         },
         spaceIndustry: {
             display: "Space Industry",
             jobs: ["rocketBuilder", "rocketDesigner", "rocketLauncher", "astronout"],
             rocketBuilder: {
-                display: "Rocket Builder"
+                display: "Rocket Tool Kit",
+                max: 1e+30,
+                current: 0,
+                amount: 1e+33,
+                advances: 0
             },
             rocketDesigner: {
-                display: "Rocket Designer"
+                display: "3D Simulator PLUS",
+                max: 1e+31,
+                current: 0,
+                amount: 2.5e+34,
+                advances: 0
             },
             rocketLauncher: {
-                display: "Rocket Launcher"
+                display: "Higher Safety Measures",
+                max: 1e+32,
+                current: 0,
+                amount: 1e+36,
+                advances: 0
             },
             astronout: {
-                display: "Astronout"
+                display: "High Tech Suits",
+                max: 1e+33,
+                current: 0,
+                amount: 5e+37,
+                advances: 0
             }
         }
     }
@@ -681,6 +709,11 @@ function setupJobs() {
 
     //hide template
     document.getElementById("template_div").style.display = "none"
+}
+
+//setup advancment things
+function setupAdvancments () {
+    
 }
 
 //refresh the jobs
