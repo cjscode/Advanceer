@@ -21,6 +21,7 @@ function resetGame() {
         standWorker: {
             display: "Stand Worker",
             jobs: ["lemonadeStand", "cookieStand", "waterStand", "sodaStand"],
+            multiplier: 1,
             lemonadeStand: {
                 display: "Lemonade Stand",
                 money_sec: 5e+0,
@@ -57,6 +58,7 @@ function resetGame() {
         gasStationWorker: {
             display: "Gas Station Worker",
             jobs: ["smallGasStation", "gasStation", "twentyFourSevenGasStation", "bigCityGasStation"],
+            multiplier: 100,
             smallGasStation: {
                 display: "Small Gas Station",
                 money_sec: 2.5e+4,
@@ -93,6 +95,7 @@ function resetGame() {
         groceryStoreWorker: {
             display: "Grocery Store Worker",
             jobs: ["shelfRestocker", "checkout", "manager", "ceo"],
+            multiplier: 5000,
             shelfRestocker: {
                 display: "Shelf Restocker",
                 money_sec: 1e+9,
@@ -129,6 +132,7 @@ function resetGame() {
         fastFood: {
             display: "Fast Food",
             jobs: ["cashier", "cook", "shiftManager", "manager"],
+            multiplier: 25000,
             cashier: {
                 display: "Cashier",
                 money_sec: 1e+14,
@@ -165,6 +169,7 @@ function resetGame() {
         carDealership: {
             display: "Car Dealership",
             jobs: ["showroomWorker", "mechanic", "financeManager", "ceo"],
+            multiplier: 750000,
             showroomWorker: {
                 display: "Showroom Worker",
                 money_sec: 7.5e+18,
@@ -201,6 +206,7 @@ function resetGame() {
         hospital: {
             display: "Hospital",
             jobs: ["nursesAssistant", "ambulanceDriver", "nurse", "cardiologist"],
+            multiplier: 10000000,
             nursesAssistant: {
                 display: "Nurse's Assistant",
                 money_sec: 2.5e+24,
@@ -237,6 +243,7 @@ function resetGame() {
         softwareCompany: {
             display: "Software Company",
             jobs: ["assistantDeveloper", "developer", "headDeveloper", "ceo"],
+            multiplier: 250000000,
             assistantDeveloper: {
                 display: "Assistant Developer",
                 money_sec: 7.5e+29,
@@ -273,6 +280,7 @@ function resetGame() {
         spaceIndustry: {
             display: "Space Industry",
             jobs: ["rocketBuilder", "rocketDesigner", "rocketLauncher", "astronout"],
+            multiplier: 1000000000,
             rocketBuilder: {
                 display: "Rocket Builder",
                 money_sec: 1e+35,
@@ -307,7 +315,7 @@ function resetGame() {
             }
         }
     }
-    
+
     //advancements
     game.advancementCategories = {
         categories: ["standWorker", "gasStationWorker", "groceryStoreWorker", "fastFood", "carDealership", "hospital", "softwareCompany", "spaceIndustry"],
@@ -665,17 +673,20 @@ function getShort(n) {
 let selectedTab = 1
 document.getElementById("tab1").addEventListener("click", function () {
     selectedTab = 1
+    document.getElementById("content").scrollTo(0)
 })
 document.getElementById("tab2").addEventListener("click", function () {
     selectedTab = 2
+    document.getElementById("content").scrollTo(0)
 })
 document.getElementById("tab3").addEventListener("click", function () {
     selectedTab = 3
+    document.getElementById("content").scrollTo(0)
 })
 
 //settings
 document.getElementById("reset").addEventListener("click", function () {
-    let doReset = prompt("Type RESET to reset your game. You can not undo this action.","")
+    let doReset = prompt("Type RESET to reset your game. You can not undo this action.", "")
     if (doReset == "RESET") {
         resetGame()
         alert("Game reset.")
@@ -700,7 +711,7 @@ function setupJobs() {
     //create jobs
     for (let i = 0; i < Object.keys(game.jobCategories).length - 1; i++) {
         headers[i] = document.createElement("h1")
-        headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display
+        headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display + " <p>(" + getShort(game.jobCategories[game.jobCategories.categories[i]].multiplier) + "x all " + game.jobCategories[game.jobCategories.categories[i]].display + " xp)</p>"
         headers[i].classList.add("section")
         headers[i].id = "header_" + i
         document.getElementById("jobs").appendChild(headers[i])
@@ -722,7 +733,7 @@ function setupJobs() {
 }
 
 //setup advancment things
-function setupAdvancments () {
+function setupAdvancments() {
     let temp = document.getElementById("template_advance_div")
     temp.style.display = "block"
     let headers = []
@@ -735,17 +746,20 @@ function setupAdvancments () {
         headers[i].id = "advancement_header_" + i
         document.getElementById("advances").appendChild(headers[i])
         for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
-            tempName.innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display
-            tempMult.innerHTML = "+"+getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].amount)+"x "+game.jobCategories[game.jobCategories.categories[i]].display+" xp"
+            tempName.innerHTML = "ERR"
+            tempMult.innerHTML = "+" + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].amount) + "x " + game.jobCategories[game.jobCategories.categories[i]].display + " xp"
             let clone = temp.cloneNode(true)
-            clone.id = "advancement_div_"+((i * 4) + ii)
+            clone.id = "advancement_div_" + ((i * 4) + ii)
+            clone.addEventListener("click", function () {
+                select(((i * 4) + ii), "adv")
+            })
             document.getElementById("advances").appendChild(clone)
         }
     }
     temp.style.display = "none"
 }
 
-//refresh the jobs
+//refresh the jobs and advancments
 function refreshJobs() {
     //setup
     let boughtList = []
@@ -789,8 +803,11 @@ function refreshJobs() {
             //update progress and money
             job.querySelector("#div_progress").style.width = getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
             job.querySelector("#progress_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
+            adv.querySelector("#div_progress").style.width = getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
+            adv.querySelector("#progress_text").innerHTML = getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
             job.querySelector("#price").innerHTML = "$" + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].price)
             job.querySelector("#mps").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) + "/s"
+            adv.querySelector("#name").innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display + " (" + game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].advances + ")"
             if (game.selectedJob == (i * 4) + ii) {
                 document.getElementById("p_job_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
                 document.getElementById("div_job_progress").style.width = getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
@@ -801,6 +818,16 @@ function refreshJobs() {
                     game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current = 0
                     game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max *= 1.1
                     game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec *= 1.05
+                }
+            }
+            if (game.selectedAdvancement == (i * 4) + ii) {
+                document.getElementById("p_advance_text").innerHTML = getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
+                document.getElementById("div_advance_progress").style.width = getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
+                game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1
+                if (game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current >= game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) {
+                    game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current = 0
+                    game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max *= 1.1
+                    game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].advances += 1
                 }
             }
         }
@@ -834,7 +861,9 @@ function select(id, type) {
             game.selectedJob = id
         }
     } else {
-        game.selectedAdvancement = id
+        if (job.bought) {
+            game.selectedAdvancement = id
+        }
     }
 }
 
