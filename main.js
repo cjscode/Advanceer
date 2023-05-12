@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.2"
+let version = "v0.21"
 
 //game
 let game = {}
@@ -540,7 +540,7 @@ function resetGame() {
             jobs: ["rocketBuilder", "rocketDesigner", "rocketLauncher", "astronout"],
             rocketBuilder: {
                 display: "Rocket Tool Kit",
-                max: 1e+30,
+                max: 1.5e+30,
                 current: 0,
                 amount: 1e+33,
                 advances: 0
@@ -611,6 +611,13 @@ function update() {
         document.getElementById("jobs").style.opacity = 0
         document.getElementById("jobs").style.display = "none"
     }
+    if (selectedTab == 2) {
+        document.getElementById("advances").style.opacity = 1
+        document.getElementById("advances").style.display = "block"
+    } else {
+        document.getElementById("advances").style.opacity = 0
+        document.getElementById("advances").style.display = "none"
+    }
     if (selectedTab == 3) {
         document.getElementById("settings").style.opacity = 1
         document.getElementById("settings").style.display = "block"
@@ -636,6 +643,9 @@ function getPercent(current, max) {
 
 //get shorter num
 function getShort(n) {
+    if (n == 0.05 || n == 0.1 || n == 0.5) {
+        return n
+    }
     const abbr = ["k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod", "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg"]
     if (n < 1000) {
         return Math.floor(n)
@@ -713,7 +723,26 @@ function setupJobs() {
 
 //setup advancment things
 function setupAdvancments () {
-    
+    let temp = document.getElementById("template_advance_div")
+    temp.style.display = "block"
+    let headers = []
+    let tempName = temp.querySelector("#name")
+    let tempMult = temp.querySelector("#mult")
+    for (let i = 0; i < Object.keys(game.jobCategories).length - 1; i++) {
+        headers[i] = document.createElement("h1")
+        headers[i].innerHTML = game.jobCategories[game.jobCategories.categories[i]].display
+        headers[i].classList.add("section")
+        headers[i].id = "advancement_header_" + i
+        document.getElementById("advances").appendChild(headers[i])
+        for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
+            tempName.innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display
+            tempMult.innerHTML = "+"+getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].amount)+"x "+game.jobCategories[game.jobCategories.categories[i]].display+" xp"
+            let clone = temp.cloneNode(true)
+            clone.id = "advancement_div_"+((i * 4) + ii)
+            document.getElementById("advances").appendChild(clone)
+        }
+    }
+    temp.style.display = "none"
 }
 
 //refresh the jobs
@@ -725,26 +754,33 @@ function refreshJobs() {
     for (let i = 0; i < Object.keys(game.jobCategories).length - 1; i++) {
         for (let ii = 0; ii < Object.keys(game.jobCategories[game.jobCategories.categories[i]].jobs).length; ii++) {
             let job = document.getElementById("div_" + ((ii * 10) + (i)))
+            let adv = document.getElementById("advancement_div_" + ((i * 4) + (ii)))
             boughtList.push(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].bought)
 
             //indicate if bought
             if (boughtList[(i * 4) + ii]) {
                 job.querySelector(".center").style.display = "none"
+                adv.style.opacity = 1
                 job.style.opacity = 1
             } else {
                 job.querySelector(".center").style.display = "block"
+                adv.style.opacity = 0.5
                 job.style.opacity = 0.5
             }
 
             //hide panels
             job = document.getElementById("div_" + ((ii * 10) + (i)))
+            adv = document.getElementById("advancement_div_" + ((i * 4) + (ii)))
             if (!(ii == 0 && i == 0)) {
                 if (ii == 1 && !(i == 0) && !boughtList[(i * 4) + ii - 1] && !(boughtList[(i * 4) + ii - 1] == undefined)) {
+                    adv.style.display = "none"
                     job.style.display = "none"
                 } else {
                     if (boughtList[(i * 4) + ii - 1]) {
+                        adv.style.display = "block"
                         job.style.display = "block"
                     } else {
+                        adv.style.display = "none"
                         job.style.display = "none"
                     }
                 }
@@ -773,8 +809,10 @@ function refreshJobs() {
         if (!(i == 0)) {
             if (!boughtList[(i * 4) - 1]) {
                 document.getElementById("header_" + i).style.display = "none"
+                document.getElementById("advancement_header_" + i).style.display = "none"
             } else {
                 document.getElementById("header_" + i).style.display = "block"
+                document.getElementById("advancement_header_" + i).style.display = "block"
             }
         }
     }
@@ -800,8 +838,9 @@ function select(id, type) {
     }
 }
 
-//create and setup jobs
+//create and setup jobs and advancments
 setupJobs()
+setupAdvancments()
 
 //save game
 function saveGame() {

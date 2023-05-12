@@ -90,7 +90,7 @@ head,body,html {
     overflow-x: scroll;
 }
 
-.job_div {
+.job_div, .advance_div {
     border-radius: 10px;
     width: 95%;
     margin: 1.25%;
