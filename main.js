@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.21"
+let version = "v0.23"
 
 //game
 let game = {}
@@ -580,6 +580,7 @@ function resetGame() {
     //selections
     game.selectedJob = "none"
     game.selectedAdvancement = "none"
+    game.usedCodes = []
 }
 if (game.version == version) {
     document.getElementById("version_text").innerHTML = game.version
@@ -693,6 +694,26 @@ document.getElementById("reset").addEventListener("click", function () {
         location.reload()
     } else {
         alert("Reset game canceled.")
+    }
+})
+document.getElementById("import_export").addEventListener("click", function () {
+    let content = document.getElementById("import_export_box")
+    if (content.value == "") {
+        content.value = btoa(JSON.stringify(game))
+    } else {
+        game = JSON.parse(atob(content.value))
+    }
+})
+document.getElementById("code_button").addEventListener("click", function () {
+    let content = document.getElementById("code_box")
+    let codes = {"FreeMoney":function(){game.money+=100000},"GoodStart":function(){game.money+=1000},"FreeReebirth":function(){game.rebirths+=1},"Noice":function(){game.money+=1},"Duble":function(){game.money*=2}}
+    if (!(codes[content.value] == undefined) && !(game.usedCodes.includes(content.value))) {
+        codes[content.value]()
+        game.usedCodes.push(content.value)
+        content.value = ""
+        alert("Redeemed!")
+    } else {
+        alert("Invalid code!")
     }
 })
 
