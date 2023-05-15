@@ -8,6 +8,7 @@ if (!(localStorage.getItem("game") == null)) {
 } else {
     resetGame(true)
 }
+
 function resetGame(resetRebirths) {
     //money
     game.money = 0
