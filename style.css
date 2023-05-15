@@ -118,6 +118,10 @@ button {
     border-radius: 5px;
 }
 
-button#import_export, button#code_button {
+button#import_export, button#code_button, button#rebirth_button {
     color: black !important;
+}
+
+button#rebirth_button {
+    background-color: dimgray !important;
 }

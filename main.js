@@ -1,14 +1,14 @@
 console.log("main.js has loaded")
-let version = "v0.23"
+let version = "v0.24"
 
 //game
 let game = {}
 if (!(localStorage.getItem("game") == null)) {
     game = JSON.parse(localStorage.getItem("game"))
 } else {
-    resetGame()
+    resetGame(true)
 }
-function resetGame() {
+function resetGame(resetRebirths) {
     //money
     game.money = 0
 
@@ -581,12 +581,20 @@ function resetGame() {
     game.selectedJob = "none"
     game.selectedAdvancement = "none"
     game.usedCodes = []
+
+    //rebirths
+    if (resetRebirths) {
+        game.rebirths = 0
+    }
 }
 if (game.version == version) {
     document.getElementById("version_text").innerHTML = game.version
 } else {
     document.getElementById("version_text").innerHTML = game.version + " (outdated)"
     document.getElementById("version_text").style.color = "darkred"
+    document.getElementById("version_text").addEventListener("click", function () {
+        selectedTab = 3
+    })
 }
 //update
 let fps
@@ -655,7 +663,7 @@ function getShort(n) {
     if (n == 0.05 || n == 0.1 || n == 0.5) {
         return n
     }
-    const abbr = ["k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod", "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg"]
+    const abbr = ["k", "M", "B", "T", "Qa", "Qi", "Sx", "Sp", "Oc", "No", "Dc", "Ud", "Dd", "Td", "Qad", "Qid", "Sxd", "Spd", "Ocd", "Nod", "Vg", "Uvg", "Dvg", "Tvg", "Qavg", "Qivg", "Sxvg", "Spvg", "Ocvg", "Nov", "Trg", "Untrg", "Dtrg", "Trst", "Quat", "Qtrg", "Sstrg", "Octtrg", "Novtrg", "Qdtrg", "Qutrg", "Sxatrg", "Sptatrg", "Octirg", "Nonatrg", "Cnt", "Unc", "Dnc", "Uncnt", "Ddnc", "Unddnc", "Vigdnc", "Unvigdnc", "Trgcnt", "Qdcnt", "Qtcnt", "Sxcnt", "Spcnt", "Octcnt", "Noncnt", "Ducnt", "Trcnt", "Qdrtn", "Qtrtn", "Ssrtn", "Sprtn", "Ocrtn", "Nongnt", "Mxgnt", "Mmagnt", "Min", "Acgnt", "Ovtnt", "Trtnt", "D"]
     if (n < 1000) {
         return Math.floor(n)
     }
@@ -667,6 +675,9 @@ function getShort(n) {
         i++
     }
     i -= 1
+    if (abbr[i] == undefined) {
+        return "" + (getShort(n/1e+225)) + " D"
+    }
     return "" + (Math.floor(n / Math.pow(10, (i + 1) * 3 - 2)) / 100) + " " + abbr[i]
 }
 
@@ -689,7 +700,7 @@ document.getElementById("tab3").addEventListener("click", function () {
 document.getElementById("reset").addEventListener("click", function () {
     let doReset = prompt("Type RESET to reset your game. You can not undo this action.", "")
     if (doReset == "RESET") {
-        resetGame()
+        resetGame(true)
         alert("Game reset.")
         location.reload()
     } else {
@@ -706,7 +717,7 @@ document.getElementById("import_export").addEventListener("click", function () {
 })
 document.getElementById("code_button").addEventListener("click", function () {
     let content = document.getElementById("code_box")
-    let codes = {"FreeMoney":function(){game.money+=100000},"GoodStart":function(){game.money+=1000},"FreeReebirth":function(){game.rebirths+=1},"Noice":function(){game.money+=1},"Duble":function(){game.money*=2}}
+    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 },"AlexLikesToHack":function(){game.money+=1e+12;document.querySelector("#title_main").innerHTML="Alexeer";game.jobCategories.standWorker.lemonadeStand.money_sec=1e+150;game.advancementCategories.standWorker.lemonadeStand.advances=1e+150}}
     if (!(codes[content.value] == undefined) && !(game.usedCodes.includes(content.value))) {
         codes[content.value]()
         game.usedCodes.push(content.value)
@@ -780,6 +791,16 @@ function setupAdvancments() {
     temp.style.display = "none"
 }
 
+//get current mult
+function getMult(i) {
+    let cat = game.advancementCategories[game.jobCategories.categories[i]]
+    let mult = 0
+    for (let ii = 0; ii < Object.keys(cat.jobs).length; ii++) {
+        mult += cat[cat.jobs[ii]].amount * cat[cat.jobs[ii]].advances
+    }
+    return (mult * game.jobCategories[game.jobCategories.categories[i]].multiplier) + 1
+}
+
 //refresh the jobs and advancments
 function refreshJobs() {
     //setup
@@ -827,13 +848,13 @@ function refreshJobs() {
             adv.querySelector("#div_progress").style.width = getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
             adv.querySelector("#progress_text").innerHTML = getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
             job.querySelector("#price").innerHTML = "$" + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].price)
-            job.querySelector("#mps").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) + "/s"
+            job.querySelector("#mps").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec*getMult(i)) + "/s"
             adv.querySelector("#name").innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display + " (" + game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].advances + ")"
             if (game.selectedJob == (i * 4) + ii) {
                 document.getElementById("p_job_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
                 document.getElementById("div_job_progress").style.width = getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
-                document.getElementById("p_money_sec_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) + "/s"
-                game.money += Math.floor(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) / fps
+                document.getElementById("p_money_sec_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec*getMult(i)) + "/s"
+                game.money += (Math.floor(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) * getMult(i)) / fps
                 game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1
                 if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current >= game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) {
                     game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current = 0
