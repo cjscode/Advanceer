@@ -32,6 +32,7 @@ head,body,html {
     background-color: dimgray;
     left: 2.5%;
     border-radius: 5px;
+    overflow-x: clip;
 }
 
 .filler {

@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v0.24"
+let version = "v0.25"
 
 //game
 let game = {}
@@ -609,6 +609,7 @@ function update() {
     let advancementBar = document.getElementById("div_advancement_progress")
     let moneyText = document.getElementById("p_money_text")
     moneyText.innerHTML = "$" + getShort(game.money)
+    document.getElementById("rebirth_button").innerHTML = "+" + getShort(Math.floor(game.money / 1e+20)) + " Rebirths"
 
     //tabs
     let tabs = document.querySelectorAll(".tab")
@@ -676,7 +677,7 @@ function getShort(n) {
     }
     i -= 1
     if (abbr[i] == undefined) {
-        return "" + (getShort(n/1e+225)) + " D"
+        return "" + (getShort(n / 1e+225)) + " D"
     }
     return "" + (Math.floor(n / Math.pow(10, (i + 1) * 3 - 2)) / 100) + " " + abbr[i]
 }
@@ -717,7 +718,7 @@ document.getElementById("import_export").addEventListener("click", function () {
 })
 document.getElementById("code_button").addEventListener("click", function () {
     let content = document.getElementById("code_box")
-    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 },"AlexLikesToHack":function(){game.money+=1e+12;document.querySelector("#title_main").innerHTML="Alexeer";game.jobCategories.standWorker.lemonadeStand.money_sec=1e+150;game.advancementCategories.standWorker.lemonadeStand.advances=1e+150}}
+    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 }, "AlexLikesToHack": function () { game.money += 1e+12; document.querySelector("#title_main").innerHTML = "Alexeer"; game.jobCategories.standWorker.lemonadeStand.money_sec = 1e+150; game.advancementCategories.standWorker.lemonadeStand.advances = 1e+150 } }
     if (!(codes[content.value] == undefined) && !(game.usedCodes.includes(content.value))) {
         codes[content.value]()
         game.usedCodes.push(content.value)
@@ -792,13 +793,16 @@ function setupAdvancments() {
 }
 
 //get current mult
-function getMult(i) {
+function getMult(i, type) {
     let cat = game.advancementCategories[game.jobCategories.categories[i]]
     let mult = 0
     for (let ii = 0; ii < Object.keys(cat.jobs).length; ii++) {
         mult += cat[cat.jobs[ii]].amount * cat[cat.jobs[ii]].advances
     }
-    return (mult * game.jobCategories[game.jobCategories.categories[i]].multiplier) + 1
+    if (type == "adv") {
+        mult = 0
+    }
+    return ((mult * game.jobCategories[game.jobCategories.categories[i]].multiplier) + 1) * (game.rebirths * 0.05) + 1
 }
 
 //refresh the jobs and advancments
@@ -848,14 +852,15 @@ function refreshJobs() {
             adv.querySelector("#div_progress").style.width = getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
             adv.querySelector("#progress_text").innerHTML = getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
             job.querySelector("#price").innerHTML = "$" + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].price)
-            job.querySelector("#mps").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec*getMult(i)) + "/s"
+            job.querySelector("#mps").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec * getMult(i, "job")) + "/s"
             adv.querySelector("#name").innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display + " (" + game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].advances + ")"
+            document.getElementById("rebirth_text").innerHTML = getShort(game.rebirths)
             if (game.selectedJob == (i * 4) + ii) {
                 document.getElementById("p_job_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
                 document.getElementById("div_job_progress").style.width = getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
-                document.getElementById("p_money_sec_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec*getMult(i)) + "/s"
-                game.money += (Math.floor(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) * getMult(i)) / fps
-                game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1
+                document.getElementById("p_money_sec_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec * getMult(i, "job")) + "/s"
+                game.money += Math.floor(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec) / fps
+                game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1 * getMult(i, "job")
                 if (game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current >= game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) {
                     game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current = 0
                     game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max *= 1.1
@@ -865,7 +870,7 @@ function refreshJobs() {
             if (game.selectedAdvancement == (i * 4) + ii) {
                 document.getElementById("p_advance_text").innerHTML = getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
                 document.getElementById("div_advance_progress").style.width = getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + "%"
-                game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1
+                game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current += 1 * getMult(i, "adv")
                 if (game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current >= game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) {
                     game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current = 0
                     game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max *= 1.1
@@ -917,6 +922,22 @@ setupAdvancments()
 function saveGame() {
     localStorage.setItem("game", JSON.stringify(game))
 }
+
+//rebirths
+document.getElementById("rebirth_button").addEventListener("click", function () {
+    if (Math.floor(game.money / 1e+20) < 1) {
+        alert("Not enough money. " + getShort(1e+20 - game.money) + " more needed to rebirth.")
+        return
+    }
+    let doRebirth = prompt("Rebirth for +" + getShort(Math.floor(game.money / 1e+20)) + " Rebirths? Type REBIRTH to confirm.")
+    if (doRebirth == "REBIRTH") {
+        game.rebirths += Math.floor(game.money / 1e+20)
+        resetGame(false)
+        alert("Rebirth successful.")
+    } else {
+        alert("Rebirth canceled.")
+    }
+})
 
 //start updates
 update()
