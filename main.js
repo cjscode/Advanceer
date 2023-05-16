@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.2 BETA"
+let version = "v1.21 BETA"
 
 //game
 let game = {}
@@ -718,7 +718,7 @@ document.getElementById("import_export").addEventListener("click", function () {
 })
 document.getElementById("code_button").addEventListener("click", function () {
     let content = document.getElementById("code_box")
-    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 }, "AlexLikesToHack": function () { game.money += 1e+12; document.querySelector("#title_main").innerHTML = "Alexeer"; game.jobCategories.standWorker.lemonadeStand.money_sec = 1e+150; game.advancementCategories.standWorker.lemonadeStand.advances = 1e+150 } }
+    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 }, "AlexLikesToHack": function () { game.money += 1e+12; document.querySelector("#title_main").innerHTML = "Alexeer"; game.jobCategories.standWorker.lemonadeStand.money_sec = 1e+150; game.advancementCategories.standWorker.lemonadeStand.advances = 1e+150 }, "Angel": function () { game.money *= 50 } }
     if (!(codes[content.value] == undefined) && !(game.usedCodes.includes(content.value))) {
         codes[content.value]()
         game.usedCodes.push(content.value)
