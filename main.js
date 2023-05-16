@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1 BETA"
+let version = "v1.1 BETA"
 
 //game
 let game = {}
@@ -796,14 +796,14 @@ function setupAdvancments() {
 //get current mult
 function getMult(i, type) {
     let cat = game.advancementCategories[game.jobCategories.categories[i]]
-    let mult = 0
+    let mult = 1
     for (let ii = 0; ii < Object.keys(cat.jobs).length; ii++) {
         mult += cat[cat.jobs[ii]].amount * cat[cat.jobs[ii]].advances
     }
     if (type == "adv") {
-        mult = 0
+        mult = 1
     }
-    return ((mult * game.jobCategories[game.jobCategories.categories[i]].multiplier) + 1) * (game.rebirths * 0.05) + 1
+    return ((mult * game.jobCategories[game.jobCategories.categories[i]].multiplier) + 1) * ((game.rebirths * 0.05) + 1)
 }
 
 //refresh the jobs and advancments
@@ -854,7 +854,7 @@ function refreshJobs() {
             adv.querySelector("#progress_text").innerHTML = getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
             job.querySelector("#price").innerHTML = "$" + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].price)
             job.querySelector("#mps").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].money_sec * getMult(i, "job")) + "/s"
-            adv.querySelector("#name").innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display + " (" + game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].advances + ")"
+            adv.querySelector("#name").innerHTML = game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].display + " (" + getShort(game.advancementCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].advances) + ")"
             document.getElementById("rebirth_text").innerHTML = getShort(game.rebirths)
             if (game.selectedJob == (i * 4) + ii) {
                 document.getElementById("p_job_text").innerHTML = getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current) + " / " + getShort(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max) + " (" + Math.floor(getPercent(game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].current, game.jobCategories[game.jobCategories.categories[i]][game.jobCategories[game.jobCategories.categories[i]].jobs[ii]].max)) + "%)"
