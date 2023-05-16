@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.1 BETA"
+let version = "v1.2 BETA"
 
 //game
 let game = {}
@@ -332,21 +332,21 @@ function resetGame(resetRebirths) {
             },
             cookieStand: {
                 display: "Allergy Friendly Ingredients",
-                max: 1e+3,
+                max: 1e+2,
                 current: 0,
                 amount: 0.1,
                 advances: 0
             },
             waterStand: {
                 display: "Cleaner Water",
-                max: 1e+4,
+                max: 1e+2,
                 current: 0,
                 amount: 0.5,
                 advances: 0
             },
             sodaStand: {
                 display: "Sugarier Sodas",
-                max: 1e+5,
+                max: 1e+2,
                 current: 0,
                 amount: 2,
                 advances: 0
@@ -357,28 +357,28 @@ function resetGame(resetRebirths) {
             jobs: ["smallGasStation", "gasStation", "twentyFourSevenGasStation", "bigCityGasStation"],
             smallGasStation: {
                 display: "Cleaner Bathroom",
-                max: 1e+6,
+                max: 1e+2,
                 current: 0,
                 amount: 10,
                 advances: 0
             },
             gasStation: {
                 display: "More Snacks",
-                max: 1e+7,
+                max: 1e+2,
                 current: 0,
                 amount: 25,
                 advances: 0
             },
             twentyFourSevenGasStation: {
                 display: "More Workers",
-                max: 1e+8,
+                max: 1e+2,
                 current: 0,
                 amount: 2e+2,
                 advances: 0
             },
             bigCityGasStation: {
                 display: "More Expensive Gas",
-                max: 1e+9,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+3,
                 advances: 0
@@ -389,28 +389,28 @@ function resetGame(resetRebirths) {
             jobs: ["shelfRestocker", "checkout", "manager", "ceo"],
             shelfRestocker: {
                 display: "Forklifts",
-                max: 1e+10,
+                max: 1e+2,
                 current: 0,
                 amount: 5e+4,
                 advances: 0
             },
             checkout: {
                 display: "Faster Belt",
-                max: 1e+11,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+6,
                 advances: 0
             },
             manager: {
                 display: "More Computers",
-                max: 1e+12,
+                max: 1e+2,
                 current: 0,
                 amount: 7.5e+7,
                 advances: 0
             },
             ceo: {
                 display: "More Stores",
-                max: 1e+13,
+                max: 1e+2,
                 current: 0,
                 amount: 2.5e+9,
                 advances: 0
@@ -421,28 +421,28 @@ function resetGame(resetRebirths) {
             jobs: ["cashier", "cook", "shiftManager", "manager"],
             cashier: {
                 display: "Faster Math Skills",
-                max: 1e+14,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+10,
                 advances: 0
             },
             cook: {
                 display: "Better Tasting Ingredients",
-                max: 1e+15,
+                max: 1e+2,
                 current: 0,
                 amount: 5e+11,
                 advances: 0
             },
             shiftManager: {
                 display: "Longer Shifts",
-                max: 1e+16,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+13,
                 advances: 0
             },
             manager: {
                 display: "Auto Ordering",
-                max: 1e+17,
+                max: 1e+2,
                 current: 0,
                 amount: 2.5e+14,
                 advances: 0
@@ -453,28 +453,28 @@ function resetGame(resetRebirths) {
             jobs: ["showroomWorker", "mechanic", "financeManager", "ceo"],
             showroomWorker: {
                 display: "More Cars",
-                max: 1e+18,
+                max: 1e+2,
                 current: 0,
                 amount: 5e+15,
                 advances: 0
             },
             mechanic: {
                 display: "More Tools",
-                max: 1e+19,
+                max: 1e+2,
                 current: 0,
                 amount: 7.5e+16,
                 advances: 0
             },
             financeManager: {
                 display: "Automated Finances",
-                max: 1e+20,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+18,
                 advances: 0
             },
             ceo: {
                 display: "More Showrooms",
-                max: 1e+21,
+                max: 1e+2,
                 current: 0,
                 amount: 2.5e+19,
                 advances: 0
@@ -485,28 +485,28 @@ function resetGame(resetRebirths) {
             jobs: ["nursesAssistant", "ambulanceDriver", "nurse", "cardiologist"],
             nursesAssistant: {
                 display: "Longer Hours",
-                max: 1e+22,
+                max: 1e+2,
                 current: 0,
                 amount: 7.5e+20,
                 advances: 0
             },
             ambulanceDriver: {
                 display: "Faster Ambulance",
-                max: 1e+23,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+22,
                 advances: 0
             },
             nurse: {
                 display: "Better Equipment",
-                max: 1e+24,
+                max: 1e+2,
                 current: 0,
                 amount: 2.5e+23,
                 advances: 0
             },
             cardiologist: {
                 display: "Less Blood Clots",
-                max: 1e+25,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+25,
                 advances: 0
@@ -517,28 +517,28 @@ function resetGame(resetRebirths) {
             jobs: ["assistantDeveloper", "developer", "headDeveloper", "ceo"],
             assistantDeveloper: {
                 display: "Faster Computers",
-                max: 1e+26,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+27,
                 advances: 0
             },
             developer: {
                 display: "Better Keyboard",
-                max: 1e+27,
+                max: 1e+2,
                 current: 0,
                 amount: 2.5e+29,
                 advances: 0
             },
             headDeveloper: {
                 display: "Coding AI",
-                max: 1e+28,
+                max: 1e+2,
                 current: 0,
                 amount: 7.5e+30,
                 advances: 0
             },
             ceo: {
                 display: "Supercomputer",
-                max: 1e+29,
+                max: 1e+2,
                 current: 0,
                 amount: 5e+31,
                 advances: 0
@@ -549,28 +549,28 @@ function resetGame(resetRebirths) {
             jobs: ["rocketBuilder", "rocketDesigner", "rocketLauncher", "astronout"],
             rocketBuilder: {
                 display: "Rocket Tool Kit",
-                max: 1.5e+30,
+                max: 1.5e+2,
                 current: 0,
                 amount: 1e+33,
                 advances: 0
             },
             rocketDesigner: {
                 display: "3D Simulator PLUS",
-                max: 1e+31,
+                max: 1e+2,
                 current: 0,
                 amount: 2.5e+34,
                 advances: 0
             },
             rocketLauncher: {
                 display: "Higher Safety Measures",
-                max: 1e+32,
+                max: 1e+2,
                 current: 0,
                 amount: 1e+36,
                 advances: 0
             },
             astronout: {
                 display: "High Tech Suits",
-                max: 1e+33,
+                max: 1e+2,
                 current: 0,
                 amount: 5e+37,
                 advances: 0
