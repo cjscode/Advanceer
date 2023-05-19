@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.21 BETA"
+let version = "v1.22 BETA"
 
 //game
 let game = {}
@@ -8,7 +8,6 @@ if (!(localStorage.getItem("game") == null)) {
 } else {
     resetGame(true)
 }
-
 function resetGame(resetRebirths) {
     //money
     game.money = 0
@@ -581,12 +580,15 @@ function resetGame(resetRebirths) {
     //selections
     game.selectedJob = "none"
     game.selectedAdvancement = "none"
+
+    //codes
     game.usedCodes = []
 
     //rebirths
     if (resetRebirths) {
         game.rebirths = 0
     }
+    return game
 }
 if (game.version == version) {
     document.getElementById("version_text").innerHTML = game.version
@@ -670,7 +672,7 @@ function getShort(n) {
         return Math.floor(n)
     }
     if (n == Infinity) {
-        return n
+        return "∞"
     }
     let i = 1
     while (n >= Math.pow(10, (i + 1) * 3)) {
@@ -719,7 +721,7 @@ document.getElementById("import_export").addEventListener("click", function () {
 })
 document.getElementById("code_button").addEventListener("click", function () {
     let content = document.getElementById("code_box")
-    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 }, "AlexLikesToHack": function () { game.money += 1e+12; document.querySelector("#title_main").innerHTML = "Alexeer"; game.jobCategories.standWorker.lemonadeStand.money_sec = 1e+150; game.advancementCategories.standWorker.lemonadeStand.advances = 1e+150 }, "Angel": function () { game.money *= 50 } }
+    let codes = { "FreeMoney": function () { game.money += 100000 }, "GoodStart": function () { game.money += 1000 }, "FreeReebirth": function () { game.rebirths += 1 }, "Noice": function () { game.money += 1 }, "Duble": function () { game.money *= 2 }, "Lemons": function () { game.advancementCategories.standWorker.lemonadeStand.advances += 25 }, "FunyNumber69": function () { game.money += 69 }, "Whoo": function () { alert("Whoo!") }, "LRose": function () { game.money *= 10; game.rebirths += 5; game.advancementCategories.standWorker.lemonadeStand.advances += 30 }, "AlexLikesToHack": function () { game.money += 1e+12; document.querySelector("#title_main").innerHTML = "Alexeer"; game.jobCategories.standWorker.lemonadeStand.money_sec = 1e+150; game.advancementCategories.standWorker.lemonadeStand.advances = 1e+150 }, "Angel": function () { game.money *= 50 }, "InfinityCode": function () { game.money = Infinity } }
     if (!(codes[content.value] == undefined) && !(game.usedCodes.includes(content.value))) {
         codes[content.value]()
         game.usedCodes.push(content.value)
