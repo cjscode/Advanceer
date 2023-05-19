@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.22 BETA"
+let version = "v1.23 BETA"
 
 //game
 let game = {}
@@ -7,6 +7,9 @@ if (!(localStorage.getItem("game") == null)) {
     game = JSON.parse(localStorage.getItem("game"))
 } else {
     resetGame(true)
+}
+if (game.isInfinity == true) {
+    game.money = Infinity
 }
 function resetGame(resetRebirths) {
     //money
@@ -584,6 +587,9 @@ function resetGame(resetRebirths) {
     //codes
     game.usedCodes = []
 
+    //infinite money
+    game.isInfinity = false
+
     //rebirths
     if (resetRebirths) {
         game.rebirths = 0
@@ -607,6 +613,9 @@ function update() {
     loopTwo = new Date()
     fps = 1000 / (loopTwo.getTime() - loopOne.getTime())
     loopOne = loopTwo
+    if (game.money == Infinity) {
+        game.isInfinity = true
+    }
     //setup
     let jobBar = document.getElementById("div_job_progress")
     let advancementBar = document.getElementById("div_advancement_progress")
