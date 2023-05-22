@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.24 BETA"
+let version = "v1.25 BETA"
 
 //game
 let game = {}

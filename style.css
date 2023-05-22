@@ -57,7 +57,7 @@ head,body,html {
 }
 
 .inner_progress_bar.light {
-    background-color: white !important;
+    background-color: rgb(200,200,200) !important;
 }
 
 #bottom_bar {
