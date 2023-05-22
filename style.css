@@ -14,6 +14,10 @@
     overflow-y: scroll;
 }
 
+#sidebar.light {
+    background-color: lightgrey !important;
+}
+
 p {
     font-size: 20px;
 }
@@ -35,6 +39,10 @@ head,body,html {
     overflow-x: clip;
 }
 
+.progress_bar.light {
+    background-color: whitesmoke !important;
+}
+
 .filler {
     opacity: 0;
     visibility: hidden;
@@ -46,6 +54,10 @@ head,body,html {
     width: 0%;
     border-radius: 5px;
     white-space: nowrap;
+}
+
+.inner_progress_bar.light {
+    background-color: white !important;
 }
 
 #bottom_bar {
@@ -64,6 +76,10 @@ head,body,html {
     text-align: center;
 }
 
+#tabs.light {
+    background-color: white !important;
+}
+
 .tab {
     float: left;
     background-color: gray;
@@ -73,6 +89,14 @@ head,body,html {
     border-top-left-radius: 10px;
     border-top-right-radius: 10px;
     position: relative;
+}
+
+.tab.light {
+    background-color: lightgrey !important;
+}
+
+.tab.selected.light {
+    background-color: whitesmoke !important;
 }
 
 .tab.selected {
@@ -91,12 +115,20 @@ head,body,html {
     overflow-x: scroll;
 }
 
+#content.light {
+    background-color: whitesmoke !important;
+}
+
 .job_div, .advance_div {
     border-radius: 10px;
     width: 95%;
     margin: 1.25%;
     background-color: gray;
     padding: 10px;
+}
+
+.job_div.light, .advance_div.light {
+    background-color: lightgrey !important;
 }
 
 .price_h1, .section, .large_text{
@@ -119,10 +151,22 @@ button {
     border-radius: 5px;
 }
 
-button#import_export, button#code_button, button#rebirth_button {
+button.light {
+    background-color: lightgrey !important;
+}
+
+button#import_export, button#code_button, button#rebirth_button, button#light_mode {
     color: black !important;
+}
+
+button#import_export.light, button#code_button.light, button#rebirth_button.light, button#light_mode.light {
+    color: gray !important;
 }
 
 button#rebirth_button {
     background-color: dimgray !important;
+}
+
+button#rebirth_button.light {
+    background-color: whitesmoke !important;
 }

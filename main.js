@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.23 BETA"
+let version = "v1.24 BETA"
 
 //game
 let game = {}
@@ -590,6 +590,9 @@ function resetGame(resetRebirths) {
     //infinite money
     game.isInfinity = false
 
+    //light mode
+    game.isLight = false
+
     //rebirths
     if (resetRebirths) {
         game.rebirths = 0
@@ -949,6 +952,19 @@ document.getElementById("rebirth_button").addEventListener("click", function () 
     } else {
         alert("Rebirth canceled.")
     }
+})
+
+//light mode
+if (game.isLight == true) {
+    let elem = document.querySelectorAll("*")
+    for (let i = 0; i < elem.length; i++) {
+        elem[i].classList.add("light")
+    }
+}
+document.getElementById("light_mode").addEventListener("click", function () {
+    game.isLight = !(game.isLight)
+    saveGame()
+    location.reload()
 })
 
 //start updates
