@@ -1,5 +1,6 @@
 console.log("main.js has loaded")
-let version = "v1.25 BETA"
+let version = "v1.26 BETA"
+let hashText = location.hash.substring(1)
 
 //game
 let game = {}
@@ -966,6 +967,14 @@ document.getElementById("light_mode").addEventListener("click", function () {
     saveGame()
     location.reload()
 })
+
+if (hashText == "jobs") {
+    selectedTab = 1
+} else if (hashText == "advance") {
+    selectedTab = 2
+} else if (hashText == "settings") {
+    selectedTab = 3
+}
 
 //start updates
 update()
