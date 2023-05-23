@@ -1,5 +1,5 @@
 console.log("main.js has loaded")
-let version = "v1.26 BETA"
+let version = "v1.27 BETA"
 let hashText = location.hash.substring(1)
 
 //game
@@ -965,7 +965,7 @@ if (game.isLight == true) {
 document.getElementById("light_mode").addEventListener("click", function () {
     game.isLight = !(game.isLight)
     saveGame()
-    location.reload()
+    location.replace("https://cjscode.github.io/Advanceer#settings")
 })
 
 if (hashText == "jobs") {
